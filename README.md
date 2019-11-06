@@ -36,8 +36,8 @@
 * security issues. GitHub
     * offers a pull request for you to update requirements.txt.
 * Don't forget shell configuration script files.
-    * 1. `run.sh`
-    * 2. `Procfile`
+    * 1. `run.sh` --> `FLASK_APP=Belly_Button_Diversity/app.py flask run`
+    * 2. `Procfile` --> `web: gunicorn Belly_Button_Diversity.app:app`
     * 3. `requirements.txt` --> NB gunicorn
     * 4. `runtime.txt` python version. 3.6.2?  
 * [Heroku apps](https://dashboard.heroku.com/apps)
@@ -67,3 +67,5 @@
 * automated pull requests
 * Confirm merge
 * delete the branch
+* `SQLAlchemy==SQLAlchemy>=1.3.0 # 1.2.10`
+* `Jinja2==2.10.1 # 2.10`
