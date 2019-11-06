@@ -36,7 +36,6 @@ def index():
     """Return the homepage."""
     return render_template("index.html")
 
-
 @app.route("/names")
 def names():
     """Return a list of sample names."""

@@ -3,19 +3,19 @@ async function buildMetadata(sample) {
   // ${route}
   // Use `d3.json` to fetch the metadata for a sample
     let metadataUrl = "/metadata/" + `${sample}`; // NB backticks
-    let metadata = await d3.json(metadataUrl);
-    console.log(metadata);
-    // console.log(`${sample}`)
+    const sampleMetadata = await d3.json(metadataUrl);    
+    console.log(sampleMetadata);
     console.log(metadataUrl)
-    console.log(metadata.length)
-    
+    // console.log(sampleMetadata.length)
+    console.log(Object.entries(sampleMetadata))
     // Use d3 to select the panel with id of `#sample-metadata`
-    let panelDiv = d3.select("#sample-metadata").html("") // Use `.html("") to clear any existing metadata
-    
-    // for.Each
-    // .Object.entries // Use `Object.entries` to add each key and value pair to the panel
-    // append.()age.
-      // x: data.o
+    let panelDiv = d3.select("#sample-metadata");
+    // Use `.html("") to clear any existing metadata
+    panelDiv.html("")
+    for (const [key, value] of Object.entries(sampleMetadata)) {
+      console.log(`${key}: ${value}`)
+      panelDiv.append("p").append("strong").text(`${key}: ${value}`)  
+    }
     // Hint: Inside the loop, you will need to use d3 to append new
     // tags for each key-value in the metadata.
 
@@ -48,7 +48,6 @@ async function buildCharts(sample) {
   const bubbleData = [bubbleTrace]
   Plotly.newPlot("bubble", bubbleData, bubbleLayout)
 
-  
   // data = [trace, xx]
   // @TODO: Build a Pie Chart
   // HINT: You will need to use slice() to grab the top 10 sample_values,
