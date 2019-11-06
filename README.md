@@ -9,6 +9,11 @@
     * GitHub security alerts.   
 
 ## How to deploy app to Heroku ##
+* Don't forget shell configuration script files.
+    * 1. run.sh
+    * 2. Procfile
+    * 3. requirements.txt
+    * 4. runtime.txt python version. 3.6.2?  
 * [Heroku apps](https://dashboard.heroku.com/apps)
 * Basic steps -->
     * create app on Heroku.
