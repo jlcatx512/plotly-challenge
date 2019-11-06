@@ -1,13 +1,16 @@
-function buildMetadata(sample) {
+async function buildMetadata(sample) {
 
   // @TODO: Complete the following function that builds the metadata panel
-
+  // ${route}
   // Use `d3.json` to fetch the metadata for a sample
+    const url = "/metadata/`${sample}`";
+    data = await d3.json(url);
+  
     // Use d3 to select the panel with id of `#sample-metadata`
+    d3.select("#sample-metadata")
+      .html("") // Use `.html("") to clear any existing metadata
+      .Object.entries // Use `Object.entries` to add each key and value pair to the panel
 
-    // Use `.html("") to clear any existing metadata
-
-    // Use `Object.entries` to add each key and value pair to the panel
     // Hint: Inside the loop, you will need to use d3 to append new
     // tags for each key-value in the metadata.
 
@@ -15,12 +18,28 @@ function buildMetadata(sample) {
     // buildGauge(data.WFREQ);
 }
 
-function buildCharts(sample) {
+// when you need an async away when calling in data from another source vs. defining it in the function.
 
+async function buildCharts(sample) {
+  url = 
   // @TODO: Use `d3.json` to fetch the sample data for the plots
-
+    d3.json(data)
     // @TODO: Build a Bubble Chart using the sample data
+    const trace = {
+      x: otu_id.year,
+      y: data.high_jump,
+      mode: "markers",
+      type: "scatter",
+      name: "high jump",
+      marker: {
+          color: "#2077b4",
+          symbol: "hexagram"
+      }
+    };
+    layout = {
 
+    }
+    Plotly.newPlot("chart", data, layout)
     // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
