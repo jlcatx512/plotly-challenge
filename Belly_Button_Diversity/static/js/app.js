@@ -1,16 +1,21 @@
 async function buildMetadata(sample) {
-
   // @TODO: Complete the following function that builds the metadata panel
   // ${route}
   // Use `d3.json` to fetch the metadata for a sample
-    const url = "/metadata/`${sample}`";
-    data = await d3.json(url);
-  
+    let metadataUrl = "/metadata/" + `${sample}`; // NB backticks
+    let metadata = await d3.json(metadataUrl);
+    console.log(metadata);
+    // console.log(`${sample}`)
+    console.log(metadataUrl)
+    console.log(metadata.length)
+    
     // Use d3 to select the panel with id of `#sample-metadata`
-    d3.select("#sample-metadata")
-      .html("") // Use `.html("") to clear any existing metadata
-      .Object.entries // Use `Object.entries` to add each key and value pair to the panel
-
+    let panelDiv = d3.select("#sample-metadata").html("") // Use `.html("") to clear any existing metadata
+    
+    // for.Each
+    // .Object.entries // Use `Object.entries` to add each key and value pair to the panel
+    // append.()age.
+      // x: data.o
     // Hint: Inside the loop, you will need to use d3 to append new
     // tags for each key-value in the metadata.
 
@@ -18,32 +23,58 @@ async function buildMetadata(sample) {
     // buildGauge(data.WFREQ);
 }
 
-// when you need an async away when calling in data from another source vs. defining it in the function.
-
 async function buildCharts(sample) {
-  url = 
+  let sampleUrl = "/samples/" + `${sample}`;
   // @TODO: Use `d3.json` to fetch the sample data for the plots
-    d3.json(data)
-    // @TODO: Build a Bubble Chart using the sample data
-    const trace = {
-      x: otu_id.year,
-      y: data.high_jump,
+  let sampleData = await d3.json(sampleUrl);
+  console.log(sampleData)
+  // @TODO: Build a Bubble Chart using the sample data
+  const bubbleTrace = {
+    x: otu_id.year,
+    y: data.high_jump,
       mode: "markers",
       type: "scatter",
       name: "high jump",
       marker: {
-          color: "#2077b4",
-          symbol: "hexagram"
+        size: [],
+        color: [ ] //"#2077b4",
+        // symbol: "hexagram"
       }
     };
-    layout = {
-
+    const bubbleLayout = {
+      title: "Bubble Chart",  
     }
-    Plotly.newPlot("chart", data, layout)
-    // @TODO: Build a Pie Chart
-    // HINT: You will need to use slice() to grab the top 10 sample_values,
-    // otu_ids, and labels (10 each).
+
+  const bubbleData = [bubbleTrace]
+  Plotly.newPlot("bubble", bubbleData, bubbleLayout)
+
+  
+  // data = [trace, xx]
+  // @TODO: Build a Pie Chart
+  // HINT: You will need to use slice() to grab the top 10 sample_values,
+  // otu_ids, and labels (10 each).
+  // slice(0,10)
+  const pieTrace = {
+    values: sample_values, 
+    labels: otu_id,
+    type: "pie"
+  }
+
+  const pieData = [pieTrace]
+
+  const pieLayout = {
+    title: "pie chart",
+    height: 400,
+    width: 500,
+    hovertext: otu_labels
+  }
+  Plotly.newPlot("pie", pieData, pieLayout)
 }
+
+// Create a PIE chart that uses data from your samples route (/samples/<sample>) to display the top 10 samples.
+// Use sample_values as the values for the PIE chart.
+// Use otu_ids as the labels for the pie chart.
+// Use otu_labels as the hovertext for the chart.
 
 function init() {
   // Grab a reference to the dropdown select element
