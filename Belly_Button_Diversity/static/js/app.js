@@ -30,6 +30,8 @@ async function buildCharts(sample) {
   console.log(sampleData)
   console.log(sampleData.otu_ids)
   console.log(sampleData.otu_ids.slice(0,10))
+  // Arrow Function
+  // console.log(sampleData.otu_ids.sort((first, second) => second - first).slice(0, 10));
 
   // @TODO: Build a Bubble Chart using the sample data
   const bubbleTrace = {
@@ -37,46 +39,47 @@ async function buildCharts(sample) {
     y: sampleData.sample_values,
       mode: "markers",
       type: "scatter",
-      // name: "Bubble Chart",
+      // name: "Bubble Chart" // NO NAME?
       marker: {
         size: sampleData.samples_values,
         color: sampleData.otu_ids
       }
     };
     const bubbleLayout = {
-      title: "Bubble Chart",  
+      // title: "Bubble Chart",
+      xaxis:{title: "OTU ID"}  
     }
 
   const bubbleData = [bubbleTrace]
   Plotly.newPlot("bubble", bubbleData, bubbleLayout)
 
-  // data = [trace, xx]
   // @TODO: Build a Pie Chart
   // HINT: You will need to use slice() to grab the top 10 sample_values,
   // otu_ids, and labels (10 each).
-  // slice(0,10)
+  // slice(0,10) MAX?
+  // Create a PIE chart that uses data from your samples route (/samples/<sample>) to display the top 10 samples.
+  // Use sample_values as the values for the PIE chart.
+  // Use otu_ids as the labels for the pie chart.
+  // Use otu_labels as the hovertext for the chart.
 
+  // 1. define pie trace
   const pieTrace = {
-    values: sampleData.otu_ids.slice(0,10), 
-    labels: sampleData.otu_ids,
+    values: sampleData.sample_values.slice(0,10), 
+    labels: sampleData.otu_ids.slice(0,10),
     type: "pie"
   }
 
   const pieData = [pieTrace]
 
   const pieLayout = {
-    title: "pie chart",
-    height: 400,
-    width: 500,
-    hovertext: sampleData.otu_labels
+    // title: "pie chart",
+    height: 500,
+    width: 1000,
+    text: sampleData.otu_labels
   }
+  // Plot. "pie" is div. 
   Plotly.newPlot("pie", pieData, pieLayout)
 }
-
-// Create a PIE chart that uses data from your samples route (/samples/<sample>) to display the top 10 samples.
-// Use sample_values as the values for the PIE chart.
-// Use otu_ids as the labels for the pie chart.
-// Use otu_labels as the hovertext for the chart.
 
 function init() {
   // Grab a reference to the dropdown select element
