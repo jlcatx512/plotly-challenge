@@ -8,6 +8,9 @@
 * [How to upload/download to Heroku](https://bootcampspot.com/sessions/591054/videos/62383)
   * UTAUS201901DATA3 Sat, Nov 2 2019 at 10:00 AM
   * GitHub security alerts.
+* https://www.w3schools.com/tags/tag_strong.asp
+* [MDN on Object.entries](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries)
+* [Looping through objects in JavaScript](https://zellwk.com/blog/looping-through-js-objects/)
 
 ## VS Code Integrated Terminal ##
 * control shift c

@@ -28,17 +28,19 @@ async function buildCharts(sample) {
   // @TODO: Use `d3.json` to fetch the sample data for the plots
   let sampleData = await d3.json(sampleUrl);
   console.log(sampleData)
+  console.log(sampleData.otu_ids)
+  console.log(sampleData.otu_ids.slice(0,10))
+
   // @TODO: Build a Bubble Chart using the sample data
   const bubbleTrace = {
-    x: otu_id.year,
-    y: data.high_jump,
+    x: sampleData.otu_ids,
+    y: sampleData.sample_values,
       mode: "markers",
       type: "scatter",
-      name: "high jump",
+      // name: "Bubble Chart",
       marker: {
-        size: [],
-        color: [ ] //"#2077b4",
-        // symbol: "hexagram"
+        size: sampleData.samples_values,
+        color: sampleData.otu_ids
       }
     };
     const bubbleLayout = {
@@ -53,9 +55,10 @@ async function buildCharts(sample) {
   // HINT: You will need to use slice() to grab the top 10 sample_values,
   // otu_ids, and labels (10 each).
   // slice(0,10)
+
   const pieTrace = {
-    values: sample_values, 
-    labels: otu_id,
+    values: sampleData.otu_ids.slice(0,10), 
+    labels: sampleData.otu_ids,
     type: "pie"
   }
 
@@ -65,7 +68,7 @@ async function buildCharts(sample) {
     title: "pie chart",
     height: 400,
     width: 500,
-    hovertext: otu_labels
+    hovertext: sampleData.otu_labels
   }
   Plotly.newPlot("pie", pieData, pieLayout)
 }
