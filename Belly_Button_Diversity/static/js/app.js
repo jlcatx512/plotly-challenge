@@ -27,6 +27,10 @@ async function buildCharts(sample) {
   let sampleUrl = "/samples/" + `${sample}`;
   // @TODO: Use `d3.json` to fetch the sample data for the plots
   let sampleData = await d3.json(sampleUrl);
+  
+  // Cast date to integers
+  sampleData.samples_values = sampleData.sample_values.map(d => +d);
+  
   console.log(sampleData);
   console.log(sampleData.otu_ids);
   console.log(sampleData.otu_ids.slice(0,10));
@@ -36,16 +40,16 @@ async function buildCharts(sample) {
   const bubbleTrace = {
     x: sampleData.otu_ids,
     y: sampleData.sample_values,
-      mode: "markers",
-      type: "scatter",
-      text: [sampleData.otu_labels.map(d=>d)],
-      // name: "Bubble Chart" // NO NAME?
-      hovertext: sampleData.otu_labels,
-      hoverinfo: "text",
-      marker: {
-        text: sampleData.otu_labels, 
-        size: sampleData.samples_values,
-        color: sampleData.otu_ids // .map(d=>d.value)
+    mode: "markers",
+    type: "scatter",
+    // text: [sampleData.otu_labels.map(d=>d)],
+    // name: "Bubble Chart" // NO NAME?
+    hovertext: sampleData.otu_labels,
+    hoverinfo: "text",
+    marker: {
+      text: sampleData.otu_labels, 
+      size: sampleData.samples_values,
+      color: sampleData.otu_ids
       }
     };
     const bubbleLayout = {
