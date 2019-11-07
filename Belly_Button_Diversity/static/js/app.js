@@ -27,11 +27,10 @@ async function buildCharts(sample) {
   let sampleUrl = "/samples/" + `${sample}`;
   // @TODO: Use `d3.json` to fetch the sample data for the plots
   let sampleData = await d3.json(sampleUrl);
-  console.log(sampleData)
-  console.log(sampleData.otu_ids)
-  console.log(sampleData.otu_ids.slice(0,10))
-  // Arrow Function
-  // console.log(sampleData.otu_ids.sort((first, second) => second - first).slice(0, 10));
+  console.log(sampleData);
+  console.log(sampleData.otu_ids);
+  console.log(sampleData.otu_ids.slice(0,10));
+  console.log(sampleData.otu_labels.slice(0,10));
 
   // @TODO: Build a Bubble Chart using the sample data
   const bubbleTrace = {
@@ -39,15 +38,20 @@ async function buildCharts(sample) {
     y: sampleData.sample_values,
       mode: "markers",
       type: "scatter",
+      text: [sampleData.otu_labels.map(d=>d)],
       // name: "Bubble Chart" // NO NAME?
+      hovertext: sampleData.otu_labels,
+      hoverinfo: "text",
       marker: {
+        text: sampleData.otu_labels, 
         size: sampleData.samples_values,
-        color: sampleData.otu_ids
+        color: sampleData.otu_ids // .map(d=>d.value)
       }
     };
     const bubbleLayout = {
       // title: "Bubble Chart",
-      xaxis:{title: "OTU ID"}  
+      xaxis:{title: "OTU ID"},
+      text: sampleData.otu_labels
     }
 
   const bubbleData = [bubbleTrace]
@@ -66,7 +70,11 @@ async function buildCharts(sample) {
   const pieTrace = {
     values: sampleData.sample_values.slice(0,10), 
     labels: sampleData.otu_ids.slice(0,10),
-    type: "pie"
+    type: "pie",
+    hovertext: sampleData.otu_labels.slice(0,10),
+    hoverinfo: "text"
+    // text: sampleData.otu_labels.slice(0,10).map(d=>d)
+    // text: sampleData.otu_labels.slice(0,10) //.map(d => d.value)
   }
 
   const pieData = [pieTrace]
@@ -75,7 +83,8 @@ async function buildCharts(sample) {
     // title: "pie chart",
     height: 500,
     width: 1000,
-    text: sampleData.otu_labels
+    text: sampleData.otu_labels.slice(0,10).map(d=>d)
+    // x: response.map(data => data.year),
   }
   // Plot. "pie" is div. 
   Plotly.newPlot("pie", pieData, pieLayout)

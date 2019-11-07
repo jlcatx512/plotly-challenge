@@ -25,6 +25,7 @@
 
 ## Pie Charts in Plotly ##
 * [Pie Charts in JavaScript](https://plot.ly/javascript/pie-charts/)
+* [hovertext for pie charts Plotly](https://plot.ly/javascript/reference/#pie-hovertext)
 
 ## Scatter Charts in Plotly ##
 * [](https://plot.ly/javascript/line-and-scatter/)
