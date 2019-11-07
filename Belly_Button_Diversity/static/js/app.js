@@ -1,34 +1,38 @@
 async function buildMetadata(sample) {
   // @TODO: Complete the following function that builds the metadata panel
-  // ${route}
-  // Use `d3.json` to fetch the metadata for a sample
-    let metadataUrl = "/metadata/" + `${sample}`; // NB backticks
-    const sampleMetadata = await d3.json(metadataUrl);    
-    console.log(sampleMetadata);
-    console.log(metadataUrl)
-    // console.log(sampleMetadata.length)
-    console.log(Object.entries(sampleMetadata))
-    // Use d3 to select the panel with id of `#sample-metadata`
-    let panelDiv = d3.select("#sample-metadata");
-    // Use `.html("") to clear any existing metadata
-    panelDiv.html("")
-    for (const [key, value] of Object.entries(sampleMetadata)) {
-      console.log(`${key}: ${value}`)
-      panelDiv.append("p").append("strong").text(`${key}: ${value}`)  
-    }
-    // Hint: Inside the loop, you will need to use d3 to append new
-    // tags for each key-value in the metadata.
 
-    // BONUS: Build the Gauge Chart
-    // buildGauge(data.WFREQ);
+  // Use `d3.json` to fetch the metadata for a sample
+  let metadataUrl = "/metadata/" + `${sample}`; // NB backticks
+  const sampleMetadata = await d3.json(metadataUrl);
+
+  // Display data in console.log for debugging.
+  console.log(sampleMetadata);
+  console.log(metadataUrl)
+  console.log(Object.entries(sampleMetadata))
+
+  // Use d3 to select the panel with id of `#sample-metadata`
+  let panelDiv = d3.select("#sample-metadata");
+  // Use `.html("") to clear any existing metadata
+  
+  panelDiv.html("")
+  
+  // Hint: Inside the loop, you will need to use d3 to append new
+  // tags for each key-value in the metadata.
+  for (const [key, value] of Object.entries(sampleMetadata)) {
+    console.log(`${key}: ${value}`)
+    panelDiv.append("p").append("strong").text(`${key}: ${value}`)  
+  }
+
+  // BONUS: Build the Gauge Chart
+  // buildGauge(data.WFREQ);
 }
 
 async function buildCharts(sample) {
-  let sampleUrl = "/samples/" + `${sample}`;
   // @TODO: Use `d3.json` to fetch the sample data for the plots
+  let sampleUrl = "/samples/" + `${sample}`;
   let sampleData = await d3.json(sampleUrl);
   
-  // Cast date to integers
+  // Cast data to numbers/integers
   sampleData.samples_values = sampleData.sample_values.map(d => +d);
   
   console.log(sampleData);
@@ -42,8 +46,6 @@ async function buildCharts(sample) {
     y: sampleData.sample_values,
     mode: "markers",
     type: "scatter",
-    // text: [sampleData.otu_labels.map(d=>d)],
-    // name: "Bubble Chart" // NO NAME?
     hovertext: sampleData.otu_labels,
     hoverinfo: "text",
     marker: {
@@ -77,8 +79,6 @@ async function buildCharts(sample) {
     type: "pie",
     hovertext: sampleData.otu_labels.slice(0,10),
     hoverinfo: "text"
-    // text: sampleData.otu_labels.slice(0,10).map(d=>d)
-    // text: sampleData.otu_labels.slice(0,10) //.map(d => d.value)
   }
 
   const pieData = [pieTrace]
@@ -88,7 +88,6 @@ async function buildCharts(sample) {
     height: 500,
     width: 1000,
     text: sampleData.otu_labels.slice(0,10).map(d=>d)
-    // x: response.map(data => data.year),
   }
   // Plot. "pie" is div. 
   Plotly.newPlot("pie", pieData, pieLayout)
